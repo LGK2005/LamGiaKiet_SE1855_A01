@@ -1,0 +1,45 @@
+<UserControl x:Class="LamGiaKietWPF.Dialogs.ProductDialog"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="400">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="Product Name:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
+        <TextBox Text="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1"/>
+        <TextBlock Foreground="Red" Text="{Binding [ProductName]}" Grid.Row="1" Grid.Column="1"/>
+
+        <TextBlock Text="Category ID:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center"/>
+        <TextBox Text="{Binding CategoryID, UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1"/>
+        <TextBlock Foreground="Red" Text="{Binding [CategoryID]}" Grid.Row="3" Grid.Column="1"/>
+
+        <TextBlock Text="Quantity Per Unit:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center"/>
+        <TextBox Text="{Binding QuantityPerUnit, UpdateSourceTrigger=PropertyChanged}" Grid.Row="4" Grid.Column="1"/>
+        <TextBlock Foreground="Red" Text="{Binding [QuantityPerUnit]}" Grid.Row="5" Grid.Column="1"/>
+
+        <TextBlock Text="Unit Price:" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center"/>
+        <TextBox Text="{Binding UnitPrice, UpdateSourceTrigger=PropertyChanged}" Grid.Row="6" Grid.Column="1"/>
+        <TextBlock Foreground="Red" Text="{Binding [UnitPrice]}" Grid.Row="7" Grid.Column="1"/>
+
+        <StackPanel Grid.Row="8" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+            <Button Content="OK" Width="80" Margin="0,0,10,0" IsDefault="True" Click="Ok_Click"/>
+            <Button Content="Cancel" Width="80" IsCancel="True"/>
+        </StackPanel>
+    </Grid>
+</UserControl> 
