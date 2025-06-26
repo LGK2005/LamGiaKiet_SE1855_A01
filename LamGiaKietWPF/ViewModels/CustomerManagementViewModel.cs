@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
 
 namespace LamGiaKietWPF.ViewModels
 {
@@ -16,7 +17,7 @@ namespace LamGiaKietWPF.ViewModels
     {
         private readonly ICustomerService _customerService;
         public ObservableCollection<Customer> Customers { get; set; } = new();
-        public string SearchKeyword { get; set; }
+        public string SearchKeyword { get; set; } = string.Empty;
         private Customer? _selectedCustomer;
         public Customer? SelectedCustomer
         {
@@ -33,11 +34,11 @@ namespace LamGiaKietWPF.ViewModels
         public CustomerManagementViewModel()
         {
             _customerService = new CustomerService(AppConfig.ConnectionString);
-            LoadCommand = new RelayCommand(_ => LoadCustomers());
-            AddCommand = new RelayCommand(_ => AddCustomer());
-            EditCommand = new RelayCommand(_ => EditCustomer(), _ => SelectedCustomer != null);
-            DeleteCommand = new RelayCommand(_ => DeleteCustomer(), _ => SelectedCustomer != null);
-            SearchCommand = new RelayCommand(_ => SearchCustomers());
+            LoadCommand = new RelayCommand(LoadCustomers);
+            AddCommand = new RelayCommand(AddCustomer);
+            EditCommand = new RelayCommand(EditCustomer, () => SelectedCustomer != null);
+            DeleteCommand = new RelayCommand(DeleteCustomer, () => SelectedCustomer != null);
+            SearchCommand = new RelayCommand(SearchCustomers);
             LoadCustomers();
         }
 

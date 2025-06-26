@@ -2,17 +2,21 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace DataAccessLayer.IRepository
 {
     public interface ICustomerRepository
     {
-        Task<List<Customer>> GetAllCustomersAsync();
-        Task<Customer> GetCustomerByIdAsync(int id);
-        Task AddCustomerAsync(Customer customer);
-        Task UpdateCustomerAsync(Customer customer);
-        Task DeleteCustomerAsync(int id);
+        // Generic CRUD operations
+        Task<OperationResult<List<T>>> GetAllAsync<T>() where T : class;
+        Task<OperationResult<T>> GetByIdAsync<T>(Expression<Func<T, bool>> predicate) where T : class;
+        Task<OperationResult> AddAsync<T>(T entity) where T : class;
+        Task<OperationResult> UpdateAsync<T>(T entity, Expression<Func<T, bool>> predicate) where T : class;
+        Task<OperationResult> DeleteAsync<T>(Expression<Func<T, bool>> predicate) where T : class;
+        
+        // Custom method for customer login
+        Task<Customer?> GetCustomerByPhoneAsync(string phone);
     }
 }

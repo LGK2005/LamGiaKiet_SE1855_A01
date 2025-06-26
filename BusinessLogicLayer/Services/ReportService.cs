@@ -19,8 +19,9 @@ namespace BusinessLogicLayer.Services
 
         public async Task<OperationResult<List<Order>>> GetOrdersByPeriodAsync(DateTime from, DateTime to)
         {
-            var all = await _orderRepository.GetAllOrdersAsync();
-            var filtered = all.Where(o => o.OrderDate >= from && o.OrderDate <= to)
+            var allResult = await _orderRepository.GetAllOrdersAsync();
+            if (!allResult.Success) return OperationResult<List<Order>>.Fail(allResult.Message ?? "Error");
+            var filtered = allResult.Data.Where(o => o.OrderDate >= from && o.OrderDate <= to)
                               .OrderByDescending(o => o.OrderDate)
                               .ToList();
             return OperationResult<List<Order>>.OK(filtered);

@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.Input;
 
 namespace LamGiaKietWPF.ViewModels
 {
@@ -16,7 +17,7 @@ namespace LamGiaKietWPF.ViewModels
     {
         private readonly IProductService _productService;
         public ObservableCollection<Product> Products { get; set; } = new();
-        public string SearchKeyword { get; set; }
+        public string SearchKeyword { get; set; } = string.Empty;
         private Product? _selectedProduct;
         public Product? SelectedProduct
         {
@@ -33,11 +34,11 @@ namespace LamGiaKietWPF.ViewModels
         public ProductManagementViewModel()
         {
             _productService = new ProductService(AppConfig.ConnectionString);
-            LoadCommand = new RelayCommand(_ => LoadProducts());
-            AddCommand = new RelayCommand(_ => AddProduct());
-            EditCommand = new RelayCommand(_ => EditProduct(), _ => SelectedProduct != null);
-            DeleteCommand = new RelayCommand(_ => DeleteProduct(), _ => SelectedProduct != null);
-            SearchCommand = new RelayCommand(_ => SearchProducts());
+            LoadCommand = new RelayCommand(LoadProducts);
+            AddCommand = new RelayCommand(AddProduct);
+            EditCommand = new RelayCommand(EditProduct, () => SelectedProduct != null);
+            DeleteCommand = new RelayCommand(DeleteProduct, () => SelectedProduct != null);
+            SearchCommand = new RelayCommand(SearchProducts);
             LoadProducts();
         }
 

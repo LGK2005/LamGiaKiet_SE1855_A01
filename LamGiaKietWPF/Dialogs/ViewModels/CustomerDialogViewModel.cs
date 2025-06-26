@@ -1,6 +1,7 @@
 using DataAccessLayer.Models;
 using LamGiaKietWPF.Helpers;
 using System.ComponentModel;
+using BusinessLogicLayer;
 
 namespace LamGiaKietWPF.Dialogs.ViewModels
 {

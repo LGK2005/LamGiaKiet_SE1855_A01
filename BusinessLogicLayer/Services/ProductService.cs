@@ -20,13 +20,13 @@ namespace BusinessLogicLayer.Services
         public async Task<OperationResult<List<Product>>> GetAllProductsAsync()
         {
             var result = await _productRepository.GetAllProductsAsync();
-            return OperationResult<List<Product>>.OK(result.ToList());
+            return result.Success ? OperationResult<List<Product>>.OK(result.Data) : OperationResult<List<Product>>.Fail(result.Message ?? "Unknown error");
         }
 
         public async Task<OperationResult<Product>> GetProductByIdAsync(int id)
         {
-            var product = await _productRepository.GetProductByIdAsync(id);
-            return product != null ? OperationResult<Product>.OK(product) : OperationResult<Product>.Fail("Not found");
+            var result = await _productRepository.GetProductByIdAsync(id);
+            return result.Success ? OperationResult<Product>.OK(result.Data) : OperationResult<Product>.Fail(result.Message ?? "Not found");
         }
 
         public async Task<OperationResult> AddProductAsync(Product product)
@@ -50,8 +50,9 @@ namespace BusinessLogicLayer.Services
 
         public async Task<OperationResult<List<Product>>> SearchProductsAsync(string keyword)
         {
-            var all = await _productRepository.GetAllProductsAsync();
-            var filtered = all.Where(p =>
+            var allResult = await _productRepository.GetAllProductsAsync();
+            if (!allResult.Success) return OperationResult<List<Product>>.Fail(allResult.Message ?? "Error");
+            var filtered = allResult.Data.Where(p =>
                 (!string.IsNullOrEmpty(p.ProductName) && p.ProductName.Contains(keyword))
             ).ToList();
             return OperationResult<List<Product>>.OK(filtered);

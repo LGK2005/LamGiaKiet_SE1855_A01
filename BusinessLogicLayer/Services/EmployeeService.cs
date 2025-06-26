@@ -20,13 +20,13 @@ namespace BusinessLogicLayer.Services
         public async Task<OperationResult<List<Employee>>> GetAllEmployeesAsync()
         {
             var result = await _employeeRepository.GetAllEmployeesAsync();
-            return OperationResult<List<Employee>>.OK(result.ToList());
+            return result.Success ? OperationResult<List<Employee>>.OK(result.Data) : OperationResult<List<Employee>>.Fail(result.Message ?? "Unknown error");
         }
 
         public async Task<OperationResult<Employee>> GetEmployeeByIdAsync(int id)
         {
-            var employee = await _employeeRepository.GetEmployeeByIdAsync(id);
-            return employee != null ? OperationResult<Employee>.OK(employee) : OperationResult<Employee>.Fail("Not found");
+            var result = await _employeeRepository.GetEmployeeByIdAsync(id);
+            return result.Success ? OperationResult<Employee>.OK(result.Data) : OperationResult<Employee>.Fail(result.Message ?? "Not found");
         }
 
         public async Task<OperationResult> AddEmployeeAsync(Employee employee)
@@ -50,8 +50,9 @@ namespace BusinessLogicLayer.Services
 
         public async Task<OperationResult<Employee>> LoginAsync(string username, string password)
         {
-            var all = await _employeeRepository.GetAllEmployeesAsync();
-            var emp = all.FirstOrDefault(e => e.UserName == username && e.Password == password);
+            var allResult = await _employeeRepository.GetAllEmployeesAsync();
+            if (!allResult.Success) return OperationResult<Employee>.Fail(allResult.Message ?? "Error");
+            var emp = allResult.Data.FirstOrDefault(e => e.UserName == username && e.Password == password);
             if (emp == null)
                 return OperationResult<Employee>.Fail("Invalid credentials");
             return OperationResult<Employee>.OK(emp);
@@ -59,8 +60,9 @@ namespace BusinessLogicLayer.Services
 
         public async Task<OperationResult<List<Employee>>> SearchEmployeesAsync(string keyword)
         {
-            var all = await _employeeRepository.GetAllEmployeesAsync();
-            var filtered = all.Where(e =>
+            var allResult = await _employeeRepository.GetAllEmployeesAsync();
+            if (!allResult.Success) return OperationResult<List<Employee>>.Fail(allResult.Message ?? "Error");
+            var filtered = allResult.Data.Where(e =>
                 (!string.IsNullOrEmpty(e.Name) && e.Name.Contains(keyword)) ||
                 (!string.IsNullOrEmpty(e.UserName) && e.UserName.Contains(keyword))
             ).ToList();

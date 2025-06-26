@@ -83,5 +83,34 @@ namespace BusinessLogicLayer
                 return OperationResult.Fail("Employee ID is required.");
             return OperationResult.Ok();
         }
+
+        // Property-level validation for Employee
+        public static string ValidateEmployeeProperty(string propertyName, object instance)
+        {
+            var vm = instance as dynamic;
+            switch (propertyName)
+            {
+                case nameof(Employee.Name):
+                    return string.IsNullOrWhiteSpace(vm.Name) ? "Name is required." : string.Empty;
+                case nameof(Employee.UserName):
+                    return string.IsNullOrWhiteSpace(vm.UserName) ? "Username is required." : string.Empty;
+                case nameof(Employee.Password):
+                    return string.IsNullOrWhiteSpace(vm.Password) ? "Password is required." : string.Empty;
+                default:
+                    return string.Empty;
+            }
+        }
+
+        // Model-level validation for Employee
+        public static OperationResult ValidateEmployee(Employee employee)
+        {
+            if (string.IsNullOrWhiteSpace(employee.Name))
+                return OperationResult.Fail("Name is required.");
+            if (string.IsNullOrWhiteSpace(employee.UserName))
+                return OperationResult.Fail("Username is required.");
+            if (string.IsNullOrWhiteSpace(employee.Password))
+                return OperationResult.Fail("Password is required.");
+            return OperationResult.Ok();
+        }
     }
 } 
