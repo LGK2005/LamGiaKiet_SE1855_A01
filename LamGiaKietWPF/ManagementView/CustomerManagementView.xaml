@@ -5,8 +5,116 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LamGiaKietWPF.ManagementView"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+             d:DesignHeight="600" d:DesignWidth="800">
+    
+    <UserControl.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Background" Value="#2E86AB"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#1B5F7A"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+            <TextBlock Text="Customer Management" 
+                       FontSize="24" 
+                       FontWeight="Bold" 
+                       Foreground="#2E86AB"/>
+            <TextBlock Text="Manage customer information, add new customers, and update existing records." 
+                       FontSize="14" 
+                       Foreground="#666666" 
+                       Margin="0,5,0,0"/>
+        </StackPanel>
+        
+        <!-- Search and Actions -->
+        <Grid Grid.Row="1" Margin="0,0,0,15">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
             
+            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                <TextBlock Text="Search:" 
+                           VerticalAlignment="Center" 
+                           FontSize="14" 
+                           FontWeight="SemiBold" 
+                           Margin="0,0,10,0"/>
+                <TextBox Name="SearchTextBox" 
+                         Width="200" 
+                         Height="30" 
+                         Text="{Binding SearchKeyword, UpdateSourceTrigger=PropertyChanged}"
+                         Margin="0,0,10,0"/>
+                <Button Content="Search" 
+                        Command="{Binding SearchCommand}"/>
+                <Button Content="Clear" 
+                        Command="{Binding LoadCommand}"
+                        Background="#666666"/>
+            </StackPanel>
+            
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Button Content="Add Customer" 
+                        Command="{Binding AddCommand}"
+                        Background="#28A745"/>
+                <Button Content="Edit Customer" 
+                        Command="{Binding EditCommand}"
+                        Background="#FFC107"
+                        Foreground="Black"/>
+                <Button Content="Delete Customer" 
+                        Command="{Binding DeleteCommand}"
+                        Background="#DC3545"/>
+            </StackPanel>
+        </Grid>
+        
+        <!-- Data Grid -->
+        <DataGrid Grid.Row="2" 
+                  Name="CustomersDataGrid"
+                  ItemsSource="{Binding Customers}"
+                  SelectedItem="{Binding SelectedCustomer}"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False"
+                  IsReadOnly="True"
+                  GridLinesVisibility="Horizontal"
+                  HeadersVisibility="Column"
+                  AlternatingRowBackground="#F8F9FA">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" 
+                                    Binding="{Binding CustomerID}" 
+                                    Width="60"/>
+                <DataGridTextColumn Header="Company Name" 
+                                    Binding="{Binding CompanyName}" 
+                                    Width="200"/>
+                <DataGridTextColumn Header="Contact Name" 
+                                    Binding="{Binding ContactName}" 
+                                    Width="150"/>
+                <DataGridTextColumn Header="Contact Title" 
+                                    Binding="{Binding ContactTitle}" 
+                                    Width="150"/>
+                <DataGridTextColumn Header="Phone" 
+                                    Binding="{Binding Phone}" 
+                                    Width="120"/>
+                <DataGridTextColumn Header="Address" 
+                                    Binding="{Binding Address}" 
+                                    Width="200"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>

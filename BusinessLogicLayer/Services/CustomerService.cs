@@ -12,6 +12,12 @@ namespace BusinessLogicLayer.Services
     public class CustomerService : ICustomerService
     {
         private readonly CustomerRepository _customerRepository;
+        
+        public CustomerService()
+        {
+            _customerRepository = new CustomerRepository();
+        }
+        
         public CustomerService(string connectionString)
         {
             _customerRepository = new CustomerRepository(connectionString);
@@ -66,6 +72,36 @@ namespace BusinessLogicLayer.Services
             if (customer == null)
                 return OperationResult<Customer>.Fail("Customer not found");
             return OperationResult<Customer>.OK(customer);
+        }
+
+        // Synchronous versions for ViewModels
+        public OperationResult<Customer> GetCustomerById(int id)
+        {
+            try
+            {
+                var result = _customerRepository.GetByIdAsync<Customer>(c => c.CustomerID == id).Result;
+                return result.Success ? OperationResult<Customer>.OK(result.Data) : OperationResult<Customer>.Fail(result.Message ?? "Not found");
+            }
+            catch (System.Exception ex)
+            {
+                return OperationResult<Customer>.Fail($"Error: {ex.Message}");
+            }
+        }
+
+        public OperationResult UpdateCustomer(Customer customer)
+        {
+            try
+            {
+                var validation = ValidationHelper.ValidateCustomer(customer);
+                if (!validation.Success) return validation;
+                
+                var result = _customerRepository.UpdateAsync(customer, c => c.CustomerID == customer.CustomerID).Result;
+                return result;
+            }
+            catch (System.Exception ex)
+            {
+                return OperationResult.Fail($"Error: {ex.Message}");
+            }
         }
     }
 }

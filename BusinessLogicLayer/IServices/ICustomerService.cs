@@ -14,5 +14,9 @@ namespace BusinessLogicLayer.IServices
         Task<OperationResult> DeleteCustomerAsync(int id);
         Task<OperationResult<List<Customer>>> SearchCustomersAsync(string keyword);
         Task<OperationResult<Customer>> LoginByPhoneAsync(string phone);
+        
+        // Synchronous version for ViewModels
+        OperationResult<Customer> GetCustomerById(int id);
+        OperationResult UpdateCustomer(Customer customer);
     }
 }

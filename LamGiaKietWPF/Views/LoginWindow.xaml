@@ -5,8 +5,174 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LamGiaKietWPF.Views"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="450" Width="800">
-    <Grid>
+        Title="Sales Management System - Login" Height="600" Width="700"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+    
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="5"/>
+        </Style>
+        <Style TargetType="PasswordBox">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="5"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Width" Value="120"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Opacity" Value="0.8"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    
+    <Grid Background="#F0F0F0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         
+        <!-- Header -->
+        <StackPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,30,0,20">
+            <TextBlock Text="Sales Management System" 
+                       FontSize="28" 
+                       FontWeight="Bold" 
+                       Foreground="#2E86AB" 
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,10"/>
+            <TextBlock Text="Choose your login type" 
+                       FontSize="16" 
+                       Foreground="#666666" 
+                       HorizontalAlignment="Center"/>
+        </StackPanel>
+        
+        <!-- Login Options -->
+        <Grid Grid.Row="1" Margin="40,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <!-- Employee Login Section -->
+            <Border Grid.Column="0" 
+                    Background="White" 
+                    CornerRadius="10" 
+                    Padding="25"
+                    BorderBrush="#E0E0E0"
+                    BorderThickness="1">
+                <StackPanel>
+                    <TextBlock Text="Employee Login" 
+                               FontSize="20" 
+                               FontWeight="Bold" 
+                               Foreground="#2E86AB" 
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,20"/>
+                    
+                    <TextBlock Text="Username:" 
+                               FontSize="14" 
+                               FontWeight="SemiBold" 
+                               Margin="0,0,0,5"/>
+                    <TextBox Name="EmployeeUsernameTextBox" 
+                             Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"/>
+                    
+                    <TextBlock Text="Password:" 
+                               FontSize="14" 
+                               FontWeight="SemiBold" 
+                               Margin="0,10,0,5"/>
+                    <PasswordBox Name="EmployeePasswordBox"/>
+                    
+                    <TextBlock Text="{Binding ErrorMessage}" 
+                               Foreground="Red" 
+                               FontSize="12" 
+                               Margin="5,10,5,0"
+                               TextWrapping="Wrap"
+                               HorizontalAlignment="Center"/>
+                    
+                    <Button Name="EmployeeLoginButton" 
+                            Content="Employee Login" 
+                            Background="#2E86AB" 
+                            Foreground="White"
+                            HorizontalAlignment="Center"
+                            Margin="0,20,0,0"
+                            Click="EmployeeLoginButton_Click"/>
+                </StackPanel>
+            </Border>
+            
+            <!-- Separator -->
+            <Border Grid.Column="1" 
+                    Background="#E0E0E0" 
+                    Width="2" 
+                    VerticalAlignment="Center" 
+                    Height="400"/>
+            
+            <!-- Customer Login Section -->
+            <Border Grid.Column="2" 
+                    Background="White" 
+                    CornerRadius="10" 
+                    Padding="25"
+                    BorderBrush="#E0E0E0"
+                    BorderThickness="1">
+                <StackPanel>
+                    <TextBlock Text="Customer Login" 
+                               FontSize="20" 
+                               FontWeight="Bold" 
+                               Foreground="#A23B72" 
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,20"/>
+                    
+                    <TextBlock Text="Phone Number:" 
+                               FontSize="14" 
+                               FontWeight="SemiBold" 
+                               Margin="0,0,0,5"/>
+                    <TextBox Name="CustomerPhoneTextBox" 
+                             Text="{Binding CustomerPhone, UpdateSourceTrigger=PropertyChanged}"/>
+                    
+                    <TextBlock Text="Note: Use your registered phone number to login" 
+                               Foreground="#666666" 
+                               FontSize="11" 
+                               Margin="5,5,5,0"
+                               TextWrapping="Wrap"
+                               HorizontalAlignment="Center"/>
+                    
+                    <TextBlock Text="{Binding CustomerErrorMessage}" 
+                               Foreground="Red" 
+                               FontSize="12" 
+                               Margin="5,10,5,0"
+                               TextWrapping="Wrap"
+                               HorizontalAlignment="Center"/>
+                    
+                    <Button Name="CustomerLoginButton" 
+                            Content="Customer Login" 
+                            Background="#A23B72" 
+                            Foreground="White"
+                            HorizontalAlignment="Center"
+                            Margin="0,20,0,0"
+                            Click="CustomerLoginButton_Click"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+        
+        <!-- Footer -->
+        <StackPanel Grid.Row="1" 
+                    VerticalAlignment="Bottom" 
+                    HorizontalAlignment="Center" 
+                    Margin="0,0,0,20">
+            <TextBlock Text="© 2024 Sales Management System" 
+                       FontSize="12" 
+                       Foreground="#999999" 
+                       HorizontalAlignment="Center"/>
+        </StackPanel>
     </Grid>
 </Window>

@@ -5,8 +5,126 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:LamGiaKietWPF.Views"
         mc:Ignorable="d"
-        Title="CustomerWindow" Height="450" Width="800">
+        Title="Sales Management System - Customer Portal" Height="600" Width="1000"
+        WindowStartupLocation="CenterScreen">
+    
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Background" Value="#2E86AB"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#1B5F7A"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#A23B72">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock Grid.Column="0" 
+                           Text="Customer Portal" 
+                           FontSize="20" 
+                           FontWeight="Bold" 
+                           Foreground="White" 
+                           VerticalAlignment="Center"
+                           Margin="20,0"/>
+                
+                <Button Grid.Column="1" 
+                        Content="Logout" 
+                        Background="#2E86AB"
+                        Margin="20,0"
+                        Click="LogoutButton_Click"/>
+            </Grid>
+        </Border>
+        
+        <!-- Main Content -->
+        <Grid Grid.Row="1" Background="#F5F5F5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <!-- Navigation Sidebar -->
+            <Border Grid.Column="0" Background="White" BorderBrush="#E0E0E0" BorderThickness="0,0,1,0">
+                <StackPanel Margin="15">
+                    <TextBlock Text="Customer Menu" 
+                               FontSize="16" 
+                               FontWeight="Bold" 
+                               Foreground="#A23B72" 
+                               Margin="0,0,0,15"/>
+                    
+                    <Button Content="View Products" 
+                            Click="ViewProducts_Click"
+                            Margin="0,3"/>
+                    
+                    <Button Content="My Orders" 
+                            Click="MyOrders_Click"
+                            Margin="0,3"/>
+                    
+                    <Button Content="Place Order" 
+                            Click="PlaceOrder_Click"
+                            Margin="0,3"/>
+                    
+                    <Separator Margin="0,15"/>
+                    
+                    <TextBlock Text="Account" 
+                               FontSize="14" 
+                               FontWeight="SemiBold" 
+                               Foreground="#666666" 
+                               Margin="0,0,0,10"/>
+                    
+                    <Button Content="Profile" 
+                            Click="Profile_Click"
+                            Margin="0,3"/>
+                </StackPanel>
+            </Border>
+            
+            <!-- Content Area -->
+            <Border Grid.Column="1" Background="White" Margin="15">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    
+                    <!-- Welcome Message -->
+                    <StackPanel Grid.Row="0" Margin="20">
+                        <TextBlock Text="Welcome to Customer Portal" 
+                                   FontSize="22" 
+                                   FontWeight="Bold" 
+                                   Foreground="#A23B72"/>
+                        <TextBlock Text="Browse products, view your orders, and manage your account." 
+                                   FontSize="14" 
+                                   Foreground="#666666" 
+                                   Margin="0,8,0,0"/>
+                    </StackPanel>
+                    
+                    <!-- Content Frame -->
+                    <Frame Grid.Row="1" 
+                           Name="ContentFrame" 
+                           NavigationUIVisibility="Hidden"
+                           Margin="20"/>
+                </Grid>
+            </Border>
+        </Grid>
     </Grid>
 </Window>

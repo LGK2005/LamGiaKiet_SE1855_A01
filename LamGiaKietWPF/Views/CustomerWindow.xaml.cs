@@ -23,5 +23,32 @@ namespace LamGiaKietWPF.Views
         {
             InitializeComponent();
         }
+
+        private void ViewProducts_Click(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Navigate(new ProductCatalogView());
+        }
+
+        private void MyOrders_Click(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Navigate(new MyOrdersView());
+        }
+
+        private void PlaceOrder_Click(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Navigate(new PlaceOrderView());
+        }
+
+        private void Profile_Click(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Navigate(new ProfileView());
+        }
+
+        private void LogoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            var loginWindow = new LoginWindow();
+            loginWindow.Show();
+            Close();
+        }
     }
 }

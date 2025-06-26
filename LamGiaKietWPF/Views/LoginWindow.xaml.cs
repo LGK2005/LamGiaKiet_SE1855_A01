@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using LamGiaKietWPF.ViewModels;
 
 namespace LamGiaKietWPF.Views
 {
@@ -19,9 +20,56 @@ namespace LamGiaKietWPF.Views
     /// </summary>
     public partial class LoginWindow : Window
     {
+        private readonly LoginViewModel _viewModel;
+
         public LoginWindow()
         {
             InitializeComponent();
+            _viewModel = new LoginViewModel();
+            DataContext = _viewModel;
+        }
+
+        private async void EmployeeLoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Employee login button clicked!", "Debug", MessageBoxButton.OK, MessageBoxImage.Information);
+            
+            // For testing purposes, let's bypass the database check for now
+            var username = EmployeeUsernameTextBox.Text;
+            var password = EmployeePasswordBox.Password;
+            
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+            {
+                MessageBox.Show("Please enter both username and password.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            
+            // Simple test - accept any non-empty credentials for now
+            MessageBox.Show($"Login successful! Username: {username}", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            
+            var adminWindow = new AdminWindow();
+            adminWindow.Show();
+            Close();
+        }
+
+        private async void CustomerLoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Customer login button clicked!", "Debug", MessageBoxButton.OK, MessageBoxImage.Information);
+            
+            // For testing purposes, let's bypass the database check for now
+            var phone = CustomerPhoneTextBox.Text;
+            
+            if (string.IsNullOrWhiteSpace(phone))
+            {
+                MessageBox.Show("Please enter a phone number.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            
+            // Simple test - accept any non-empty phone for now
+            MessageBox.Show($"Customer login successful! Phone: {phone}", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            
+            var customerWindow = new CustomerWindow();
+            customerWindow.Show();
+            Close();
         }
     }
 }

@@ -19,6 +19,12 @@ namespace DataAccessLayer.Repository
             _genericRepository = new GenericRepository(connectionString);
         }
 
+        public CustomerRepository()
+        {
+            _connectionString = "DefaultConnection";
+            _genericRepository = new GenericRepository(_connectionString);
+        }
+
         // CRUD operations using GenericRepository
         public Task<OperationResult<List<T>>> GetAllAsync<T>() where T : class
             => _genericRepository.GetAllAsync<T>();

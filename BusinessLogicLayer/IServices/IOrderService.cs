@@ -13,5 +13,9 @@ namespace BusinessLogicLayer.IServices
         Task<OperationResult> UpdateOrderAsync(Order order);
         Task<OperationResult> DeleteOrderAsync(int id);
         Task<OperationResult<List<Order>>> SearchOrdersAsync(string keyword);
+        
+        // Customer-specific methods
+        OperationResult<List<Order>> GetOrdersByCustomerId(int customerId);
+        OperationResult<int> CreateOrder(Order order, List<CartItem> orderDetails);
     }
 }

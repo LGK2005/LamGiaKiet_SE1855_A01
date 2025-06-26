@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using LamGiaKietWPF.ManagementView;
 
 namespace LamGiaKietWPF.Views
 {
@@ -22,6 +23,43 @@ namespace LamGiaKietWPF.Views
         public AdminWindow()
         {
             InitializeComponent();
+        }
+
+        private void CustomerManagement_Click(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Navigate(new CustomerManagementView());
+        }
+
+        private void ProductManagement_Click(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Navigate(new ProductManagementView());
+        }
+
+        private void OrderManagement_Click(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Navigate(new OrderManagementView());
+        }
+
+        private void ReportManagement_Click(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Navigate(new ReportManagementView());
+        }
+
+        private void ViewAllOrders_Click(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Navigate(new OrderManagementView());
+        }
+
+        private void ViewAllProducts_Click(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Navigate(new ProductManagementView());
+        }
+
+        private void LogoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            var loginWindow = new LoginWindow();
+            loginWindow.Show();
+            Close();
         }
     }
 }

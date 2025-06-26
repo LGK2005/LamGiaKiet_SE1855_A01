@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using LamGiaKietWPF.ViewModels;
 
 namespace LamGiaKietWPF.ManagementView
 {
@@ -23,6 +24,7 @@ namespace LamGiaKietWPF.ManagementView
         public CustomerManagementView()
         {
             InitializeComponent();
+            DataContext = new CustomerManagementViewModel();
         }
     }
 }

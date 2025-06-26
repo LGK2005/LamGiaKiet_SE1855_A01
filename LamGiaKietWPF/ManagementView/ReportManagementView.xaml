@@ -5,8 +5,157 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:LamGiaKietWPF.ManagementView"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+             d:DesignHeight="600" d:DesignWidth="800">
+    
+    <UserControl.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Background" Value="#2E86AB"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#1B5F7A"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+            <TextBlock Text="Report Management" 
+                       FontSize="24" 
+                       FontWeight="Bold" 
+                       Foreground="#2E86AB"/>
+            <TextBlock Text="Generate reports, analyze sales data, and view business insights." 
+                       FontSize="14" 
+                       Foreground="#666666" 
+                       Margin="0,5,0,0"/>
+        </StackPanel>
+        
+        <!-- Report Options -->
+        <Border Grid.Row="1" 
+                Background="#F8F9FA" 
+                BorderBrush="#E0E0E0" 
+                BorderThickness="1" 
+                CornerRadius="5" 
+                Padding="20" 
+                Margin="0,0,0,20">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock Grid.Row="0" Grid.ColumnSpan="2" 
+                           Text="Report Options" 
+                           FontSize="16" 
+                           FontWeight="Bold" 
+                           Foreground="#2E86AB" 
+                           Margin="0,0,0,15"/>
+                
+                <!-- Date Range -->
+                <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,20,0">
+                    <TextBlock Text="Date Range:" 
+                               FontSize="14" 
+                               FontWeight="SemiBold" 
+                               Margin="0,0,0,5"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="From:" 
+                                   VerticalAlignment="Center" 
+                                   Margin="0,0,5,0"/>
+                        <DatePicker Name="FromDatePicker" 
+                                    Width="120" 
+                                    Margin="0,0,10,0"/>
+                        <TextBlock Text="To:" 
+                                   VerticalAlignment="Center" 
+                                   Margin="0,0,5,0"/>
+                        <DatePicker Name="ToDatePicker" 
+                                    Width="120"/>
+                    </StackPanel>
+                </StackPanel>
+                
+                <!-- Report Types -->
+                <StackPanel Grid.Row="1" Grid.Column="1">
+                    <TextBlock Text="Report Type:" 
+                               FontSize="14" 
+                               FontWeight="SemiBold" 
+                               Margin="0,0,0,5"/>
+                    <ComboBox Name="ReportTypeComboBox" 
+                              Width="200" 
+                              Height="30">
+                        <ComboBoxItem Content="Sales Report"/>
+                        <ComboBoxItem Content="Order Summary"/>
+                        <ComboBoxItem Content="Customer Analysis"/>
+                        <ComboBoxItem Content="Product Performance"/>
+                    </ComboBox>
+                </StackPanel>
+                
+                <!-- Generate Button -->
+                <Button Grid.Row="2" Grid.ColumnSpan="2" 
+                        Content="Generate Report" 
+                        Background="#28A745"
+                        HorizontalAlignment="Center"
+                        Margin="0,15,0,0"/>
+            </Grid>
+        </Border>
+        
+        <!-- Report Display Area -->
+        <Border Grid.Row="2" 
+                Background="White" 
+                BorderBrush="#E0E0E0" 
+                BorderThickness="1" 
+                CornerRadius="5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+                <Border Grid.Row="0" 
+                        Background="#F8F9FA" 
+                        BorderBrush="#E0E0E0" 
+                        BorderThickness="0,0,0,1" 
+                        Padding="15">
+                    <TextBlock Text="Report Results" 
+                               FontSize="16" 
+                               FontWeight="Bold" 
+                               Foreground="#2E86AB"/>
+                </Border>
+                
+                <ScrollViewer Grid.Row="1" 
+                              VerticalScrollBarVisibility="Auto" 
+                              HorizontalScrollBarVisibility="Auto">
+                    <StackPanel Margin="20">
+                        <TextBlock Text="No report generated yet." 
+                                   FontSize="14" 
+                                   Foreground="#666666" 
+                                   HorizontalAlignment="Center" 
+                                   VerticalAlignment="Center"/>
+                        <TextBlock Text="Select a report type and date range, then click 'Generate Report' to view results." 
+                                   FontSize="12" 
+                                   Foreground="#999999" 
+                                   HorizontalAlignment="Center" 
+                                   Margin="0,10,0,0"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+        </Border>
     </Grid>
 </UserControl>

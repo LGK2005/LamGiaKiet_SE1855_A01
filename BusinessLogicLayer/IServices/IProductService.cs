@@ -13,5 +13,8 @@ namespace BusinessLogicLayer.IServices
         Task<OperationResult> UpdateProductAsync(Product product);
         Task<OperationResult> DeleteProductAsync(int id);
         Task<OperationResult<List<Product>>> SearchProductsAsync(string keyword);
+        
+        // Synchronous version for ViewModels
+        OperationResult<List<Product>> GetAllProducts();
     }
 }
