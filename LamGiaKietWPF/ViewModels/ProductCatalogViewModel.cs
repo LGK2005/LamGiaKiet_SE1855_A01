@@ -13,8 +13,22 @@ namespace LamGiaKietWPF.ViewModels
     public class ProductCatalogViewModel : INotifyPropertyChanged
     {
         private readonly ProductService _productService;
+        private List<Product> _allProducts = new();
+        
         public ObservableCollection<Product> Products { get; set; } = new();
-        public string SearchKeyword { get; set; } = string.Empty;
+        
+        private string _searchKeyword = string.Empty;
+        public string SearchKeyword 
+        { 
+            get => _searchKeyword;
+            set 
+            { 
+                _searchKeyword = value; 
+                OnPropertyChanged(nameof(SearchKeyword));
+                FilterProducts();
+            }
+        }
+        
         private Product? _selectedProduct;
         public Product? SelectedProduct
         {
@@ -24,29 +38,82 @@ namespace LamGiaKietWPF.ViewModels
 
         public ICommand LoadCommand { get; }
         public ICommand SearchCommand { get; }
+        public ICommand ClearSearchCommand { get; }
 
         public ProductCatalogViewModel()
         {
             _productService = new ProductService(AppConfig.ConnectionString);
-            LoadCommand = new RelayCommand(async () => await LoadProducts());
-            SearchCommand = new RelayCommand(async () => await SearchProducts());
-            _ = LoadProducts();
+            LoadCommand = new AsyncRelayCommand(LoadProductsAsync);
+            SearchCommand = new AsyncRelayCommand(SearchProductsAsync);
+            ClearSearchCommand = new RelayCommand(ClearSearch);
+            _ = LoadProductsAsync();
         }
 
-        public async Task LoadProducts()
+        public async Task LoadProductsAsync()
         {
             var result = await _productService.GetAllProductsAsync();
-            Products.Clear();
             if (result.Success && result.Data != null)
-                foreach (var p in result.Data) Products.Add(p);
+            {
+                _allProducts = result.Data;
+                Products.Clear();
+                foreach (var product in _allProducts)
+                {
+                    Products.Add(product);
+                }
+            }
         }
 
-        public async Task SearchProducts()
+        public async Task SearchProductsAsync()
         {
-            var result = await _productService.SearchProductsAsync(SearchKeyword);
-            Products.Clear();
-            if (result.Success && result.Data != null)
-                foreach (var p in result.Data) Products.Add(p);
+            if (string.IsNullOrWhiteSpace(SearchKeyword))
+            {
+                await LoadProductsAsync();
+            }
+            else
+            {
+                var result = await _productService.SearchProductsAsync(SearchKeyword);
+                if (result.Success && result.Data != null)
+                {
+                    Products.Clear();
+                    foreach (var product in result.Data)
+                    {
+                        Products.Add(product);
+                    }
+                }
+            }
+        }
+
+        public void ClearSearch()
+        {
+            SearchKeyword = string.Empty;
+            _ = LoadProductsAsync();
+        }
+
+        private void FilterProducts()
+        {
+            if (string.IsNullOrWhiteSpace(SearchKeyword))
+            {
+                // Show all products
+                Products.Clear();
+                foreach (var product in _allProducts)
+                {
+                    Products.Add(product);
+                }
+            }
+            else
+            {
+                // Filter products based on search keyword
+                var filteredProducts = _allProducts.Where(p =>
+                    p.ProductName?.Contains(SearchKeyword, System.StringComparison.OrdinalIgnoreCase) == true ||
+                    p.ProductID.ToString().Contains(SearchKeyword, System.StringComparison.OrdinalIgnoreCase)
+                ).ToList();
+
+                Products.Clear();
+                foreach (var product in filteredProducts)
+                {
+                    Products.Add(product);
+                }
+            }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

@@ -2,6 +2,7 @@
 using DataAccessLayer.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -14,7 +15,8 @@ namespace DataAccessLayer.Repository
         private readonly string _connectionString;
         public GenericRepository(string connectionString)
         {
-            _connectionString = connectionString;
+            _connectionString = ConfigurationManager.ConnectionStrings["AS01_SalesData"]?.ConnectionString
+                            ?? throw new InvalidOperationException("Connection string not found.");
         }
 
         public async Task<OperationResult> AddAsync<T>(T entity) where T : class

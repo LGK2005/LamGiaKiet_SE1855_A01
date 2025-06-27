@@ -26,13 +26,13 @@ namespace BusinessLogicLayer.Services
         public async Task<OperationResult<List<Product>>> GetAllProductsAsync()
         {
             var result = await _productRepository.GetAllProductsAsync();
-            return result.Success ? OperationResult<List<Product>>.OK(result.Data) : OperationResult<List<Product>>.Fail(result.Message ?? "Unknown error");
+            return result;
         }
 
         public async Task<OperationResult<Product>> GetProductByIdAsync(int id)
         {
             var result = await _productRepository.GetProductByIdAsync(id);
-            return result.Success ? OperationResult<Product>.OK(result.Data) : OperationResult<Product>.Fail(result.Message ?? "Not found");
+            return result;
         }
 
         public async Task<OperationResult> AddProductAsync(Product product)
@@ -64,62 +64,15 @@ namespace BusinessLogicLayer.Services
             return OperationResult<List<Product>>.OK(filtered);
         }
 
-        // Synchronous version for ViewModels
+        // Synchronous version for ViewModels - now uses database
         public OperationResult<List<Product>> GetAllProducts()
         {
             try
             {
-                // Use in-memory data instead of database access to prevent freezing
-                var mockProducts = new List<Product>
-                {
-                    new Product
-                    {
-                        ProductID = 1,
-                        ProductName = "Laptop Computer",
-                        CategoryID = 1,
-                        UnitPrice = 999.99m,
-                        UnitsInStock = 50,
-                        Discontinued = false
-                    },
-                    new Product
-                    {
-                        ProductID = 2,
-                        ProductName = "Wireless Mouse",
-                        CategoryID = 1,
-                        UnitPrice = 29.99m,
-                        UnitsInStock = 100,
-                        Discontinued = false
-                    },
-                    new Product
-                    {
-                        ProductID = 3,
-                        ProductName = "Mechanical Keyboard",
-                        CategoryID = 1,
-                        UnitPrice = 149.99m,
-                        UnitsInStock = 25,
-                        Discontinued = false
-                    },
-                    new Product
-                    {
-                        ProductID = 4,
-                        ProductName = "4K Monitor",
-                        CategoryID = 1,
-                        UnitPrice = 399.99m,
-                        UnitsInStock = 30,
-                        Discontinued = false
-                    },
-                    new Product
-                    {
-                        ProductID = 5,
-                        ProductName = "USB-C Cable",
-                        CategoryID = 1,
-                        UnitPrice = 19.99m,
-                        UnitsInStock = 200,
-                        Discontinued = false
-                    }
-                };
-
-                return OperationResult<List<Product>>.OK(mockProducts);
+                // Use the async method synchronously to get real database data
+                var task = GetAllProductsAsync();
+                task.Wait(); // Wait for the async operation to complete
+                return task.Result;
             }
             catch (System.Exception ex)
             {

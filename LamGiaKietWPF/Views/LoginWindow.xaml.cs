@@ -31,8 +31,6 @@ namespace LamGiaKietWPF.Views
 
         private async void EmployeeLoginButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Employee login button clicked!", "Debug", MessageBoxButton.OK, MessageBoxImage.Information);
-            
             // For testing purposes, let's bypass the database check for now
             var username = EmployeeUsernameTextBox.Text;
             var password = EmployeePasswordBox.Password;
@@ -44,8 +42,6 @@ namespace LamGiaKietWPF.Views
             }
             
             // Simple test - accept any non-empty credentials for now
-            MessageBox.Show($"Login successful! Username: {username}", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-            
             var adminWindow = new AdminWindow();
             adminWindow.Show();
             Close();
@@ -53,8 +49,6 @@ namespace LamGiaKietWPF.Views
 
         private async void CustomerLoginButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Customer login button clicked!", "Debug", MessageBoxButton.OK, MessageBoxImage.Information);
-            
             // For testing purposes, let's bypass the database check for now
             var phone = CustomerPhoneTextBox.Text;
             
@@ -65,8 +59,6 @@ namespace LamGiaKietWPF.Views
             }
             
             // Simple test - accept any non-empty phone for now
-            MessageBox.Show($"Customer login successful! Phone: {phone}", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-            
             var customerWindow = new CustomerWindow();
             customerWindow.Show();
             Close();
